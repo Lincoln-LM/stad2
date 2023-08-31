@@ -1,0 +1,2 @@
+guRandom = 0x8007AFA0;
+gLCRNGState = 0x80124D50;

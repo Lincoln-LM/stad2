@@ -1,0 +1,280 @@
+name: Pokemon Stadium 2 (North America)
+sha1: d8343e69a7dc63b869cf6361d87cde64444281d3
+options:
+  basename: pokemonstadium2
+  target_path: baserom.z64
+  base_path: .
+  platform: n64
+  compiler: IDO
+
+  asm_path: asm
+  src_path: src
+  build_path: build
+  create_asm_dependencies: True
+
+  ld_script_path: pokemonstadium2.ld
+
+  find_file_boundaries: True
+  header_encoding: ASCII
+
+  o_as_suffix: True
+  use_legacy_include_asm: False
+  mips_abi_float_regs: numeric
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+
+  # section_order: [".text", ".data", ".rodata", ".bss"]
+  # auto_all_sections: [".data", ".rodata", ".bss"]
+
+  symbol_addrs_path: symbol_addrs.txt
+  create_undefined_funcs_auto: false
+  undefined_funcs_auto_path: undefined_funcs_auto.txt
+  undefined_syms_auto_path: undefined_syms_auto.txt
+  # reloc_addrs_path:
+  #   - reloc_addrs.txt
+
+  extensions_path: tools/splat_ext
+
+  # string_encoding: ASCII
+  # data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+  libultra_symbols: True
+  # hardware_regs: True
+  # gfx_ucode: # one of [f3d, f3db, f3dex, f3dexb, f3dex2]
+segments:
+  - name: header
+    type: header
+    start: 0x0
+
+  - name: boot
+    type: code
+    start: 0x40
+    vram: 0xA4000040
+    subsegments:
+    - [0x0040, asm, boot]
+    - [0x0B70, bin, bootcode_font]
+
+  - name: entry
+    type: code
+    start: 0x1000
+    vram: 0x80000400
+    subsegments:
+      - [0x1000, hasm]
+
+  - name: main
+    type: code
+    start: 0x1060
+    vram: 0x80000400
+    follows_vram: entry
+    bss_size: 0x8C5F0
+    subsegments:
+      - [0x1000, asm]
+      - [0x1060, asm]
+      - [0x11B0, asm]
+      - [0xBF50, c, math2]
+      - [0xC180, bin]
+      # - [0xC180, asm]
+      # - [0xC290, asm]
+      # - [0xC2A0, asm]
+      # - [0xC2C0, asm]
+      # - [0xC380, asm]
+      # - [0xC890, asm]
+      # - [0xCE80, asm]
+      # - [0x10BB0, asm]
+      # - [0x14640, asm]
+      # - [0x1A140, asm]
+      # - [0x1A360, asm]
+      # - [0x1C2D0, asm]
+      # - [0x1CDC0, asm]
+      # - [0x20860, asm]
+      # - [0x208A0, asm]
+      # - [0x20C50, asm]
+      - [0x36300, c, math]
+      - [0x38A00, bin]
+      # - [0x38A00, asm]
+      # - [0x39C70, asm]
+      # - [0x3D630, asm]
+      # - [0x3EA20, asm]
+      # - [0x3FBE0, asm]
+      # - [0x40600, asm]
+      # - [0x41B60, asm]
+      # - [0x43700, asm]
+      # - [0x44300, asm]
+      # - [0x44E70, asm]
+      # - [0x47580, asm]
+      # - [0x4AAD0, asm]
+      # - [0x4AC10, asm]
+      # - [0x4C2E0, asm]
+      # - [0x4CC20, asm]
+      # - [0x4EE50, asm]
+      # - [0x4F800, asm]
+      # - [0x517E0, asm]
+      # - [0x56F90, asm]
+      # - [0x585D0, asm]
+      # - [0x615D0, asm]
+      # - [0x638E0, asm]
+      # - [0x63CF0, asm]
+      # - [0x641E0, asm]
+      # - [0x654A0, asm]
+      # - [0x65820, asm]
+      # - [0x65E20, asm]
+      # - [0x667B0, asm]
+      # - [0x66990, asm]
+      # - [0x66B50, asm]
+      # - [0x66DF0, asm]
+      # - [0x672F0, asm]
+      # - [0x674C0, asm]
+      # - [0x674D0, asm]
+      # - [0x67F00, asm]
+      # - [0x68F90, asm]
+      # - [0x69650, asm]
+      # - [0x69F70, asm]
+      # - [0x6AA10, asm]
+      # - [0x6AA80, asm]
+      # - [0x6DDA0, asm]
+      # - [0x6DEC0, asm]
+      # - [0x6E850, asm]
+      # - [0x71E10, asm]
+      # - [0x72540, asm]
+      # - [0x72720, asm]
+      # - [0x728D0, asm]
+      # - [0x72C30, asm]
+      # - [0x73C80, asm]
+      # - [0x74020, asm]
+      # - [0x746D0, asm]
+      # - [0x74820, asm]
+      # - [0x74A20, asm]
+      # - [0x74B70, asm]
+      # - [0x74FF0, asm]
+      # - [0x75100, asm]
+      # - [0x761E0, asm]
+      # - [0x76230, asm]
+      # - [0x762D0, asm]
+      # - [0x76760, asm]
+      # - [0x76B50, asm]
+      # - [0x76D60, asm]
+      # - [0x77120, asm]
+      # - [0x771B0, asm]
+      # - [0x77670, asm]
+      # - [0x77C20, asm]
+      # - [0x77C60, asm]
+      # - [0x77D80, asm]
+      # - [0x77F10, asm]
+      # - [0x77FA0, asm]
+      # - [0x78180, asm]
+      # - [0x78210, asm]
+      # - [0x78290, asm]
+      # - [0x782B0, asm]
+      # - [0x78330, asm]
+      # - [0x78790, asm]
+      # - [0x78A20, asm]
+      # - [0x78AB0, asm]
+      # - [0x78B60, asm]
+      # - [0x78BB0, asm]
+      # - [0x78EC0, asm]
+      # - [0x78F30, asm]
+      # - [0x78F80, asm]
+      # - [0x78FD0, asm]
+      # - [0x79510, asm]
+      # - [0x79640, asm]
+      # - [0x796B0, asm]
+      # - [0x79750, asm]
+      - [0x7BBA0, c, libultra/gu/random]
+      - [0x7BBD0, bin]
+      # - [0x7BBD0, asm]
+      # - [0x7C8B0, asm]
+      # - [0x7CA30, asm]
+      # - [0x7CAB0, asm]
+      # - [0x7CB00, asm]
+      # - [0x7CBA0, asm]
+      # - [0x7CC60, asm]
+      # - [0x7CD00, asm]
+      # - [0x7CDE0, asm]
+      # - [0x7CE60, asm]
+      # - [0x7D060, asm]
+      # - [0x7D630, asm]
+      # - [0x7D660, asm]
+      # - [0x7D690, asm]
+      # - [0x7D6F0, asm]
+      # - [0x7D940, asm]
+      # - [0x7DAA0, asm]
+      # - [0x7DB00, asm]
+      # - [0x7DC50, asm]
+      # - [0x7DCD0, asm]
+      # - [0x7E0A0, asm]
+      # - [0x7E250, asm]
+      # - [0x7E750, asm]
+      # - [0x7E970, asm]
+      # - [0x7EAC0, asm]
+      # - [0x7EB00, asm]
+      # - [0x7EB20, asm]
+      # - [0x7EB80, asm]
+      # - [0x7EB90, asm]
+      # - [0x7EBA0, asm]
+      # - [0x7EBB0, asm]
+      # - [0x7EF20, asm]
+      # - [0x7F170, asm]
+      # - [0x7F290, asm]
+      # - [0x7F590, asm]
+      # - [0x7F5C0, asm]
+      # - [0x7F730, asm]
+      # - [0x7F780, asm]
+      # - [0x7F8E0, asm]
+      # - [0x7FA40, asm]
+      # - [0x7FA70, asm]
+      # - [0x7FAC0, asm]
+      # - [0x7FB20, asm]
+      # - [0x7FDE0, asm]
+      # - [0x7FE70, asm]
+      # - [0x7FFD0, asm]
+      # - [0x80280, asm]
+      # - [0x80320, asm]
+      # - [0x80C40, asm]
+      # - [0x81040, asm]
+      # - [0x81AC0, asm]
+      # - [0x81C50, asm]
+      # - [0x827D0, asm]
+      # - [0x82820, asm]
+      # - [0x83420, asm]
+      # - [0x834A0, asm]
+      # - [0x834C0, asm]
+      # - [0x83510, asm]
+      # - [0x83550, asm]
+      # - [0x835B0, asm]
+      # - [0x83600, asm]
+      # - [0x836D0, asm]
+      # - [0x83920, asm]
+      # - [0x83B50, asm]
+      # - [0x83CC0, asm]
+      # - [0x83CD0, asm]
+      # - [0x83E30, asm]
+      # - [0x83FC0, asm]
+      # - [0x84C60, asm]
+      # - [0x84F00, asm]
+      # - [0x84F50, asm]
+      # - [0x84FA0, asm]
+      # - [0x84FF0, asm]
+      # - [0x85000, asm]
+      # - [0x85020, asm]
+      # - [0x85330, asm]
+      # - [0x85340, asm]
+      # - [0x85380, asm]
+      # - [0x85650, asm]
+      # - [0x856A0, asm]
+      # - [0x858B0, asm]
+      # - [0x85A80, asm]
+      # - [0x85B90, asm]
+      # - [0x85BC0, asm]
+      # - [0x85D60, asm]
+      # - [0x85D90, asm]
+      - [0xA2030, .data, libultra/gu/random]
+      - [0xA2040, bin]
+      - { start: 0xA8A80, type: bss, vram: 0x800A7E80 }
+
+  - type: bin
+    start: 0xA8A80
+    follows_vram: main
+  - [0x4000000]
