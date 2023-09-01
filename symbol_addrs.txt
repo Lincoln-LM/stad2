@@ -1,2 +1,12 @@
 guRandom = 0x8007AFA0;
 gLCRNGState = 0x80124D50;
+farfetchdMove1 = 0x88104E50;
+farfetchdMove2 = 0x88104E51;
+farfetchdMove3 = 0x88104E52;
+farfetchdMove4 = 0x88104E53;
+gligarMove1 = 0x88104E54;
+gligarMove2 = 0x88104E55;
+gligarMove3 = 0x88104E56;
+gligarMove4 = 0x88104E57;
+osGetCount = 0x80079960;
+createGiftPokemon = 0x80170170;

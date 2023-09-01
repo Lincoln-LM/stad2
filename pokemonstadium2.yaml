@@ -182,6 +182,8 @@ segments:
       # - [0x79640, asm]
       # - [0x796B0, asm]
       # - [0x79750, asm]
+      - [0x7A5C0, hasm, os/osGetCount]
+      - [0x7A5D0, bin]
       - [0x7BBA0, c, libultra/gu/random]
       - [0x7BBD0, bin]
       # - [0x7BBD0, asm]
@@ -277,4 +279,11 @@ segments:
   - type: bin
     start: 0xA8A80
     follows_vram: main
+
+  - type: code
+    vram: 0x80170170
+    start: 0x170D70
+    subsegments:
+      - [0x170D70, c, 170D70]
+      - [0x1711B0, bin]
   - [0x4000000]

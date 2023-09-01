@@ -3,7 +3,7 @@
 extern int gLCRNGState;
 
 void seedLCRNG(int seed) {
-    gLCRNGState = seed;
+  gLCRNGState = seed;
 }
 
 int randLCRNG(void)
