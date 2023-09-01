@@ -68,7 +68,7 @@ clean:
 	rm -rf $(BUILD_DIR) $(TARGET).z64
 
 submodules:
-	git submodule update --init --recursive
+	# git submodule update --init --recursive
 
 split:
 	rm -rf $(DATA_DIRS) $(ASM_DIRS) && ./tools/splat/split.py $(SPLAT_YAML)
