@@ -168,7 +168,7 @@ void _selectMysteryGiftResult(unsigned char* trainerId, sGiftResult* giftResult,
 
 #if NON_MATCHING
 // 2007 equivalent(?) https://decomp.me/scratch/lQW4f
-int func_8043636C(short arg0, unsigned short arg1)
+int generateMysteryGift(short arg0, unsigned short arg1)
 {
     int iVar2;
     unsigned char trainerId[2];
@@ -195,7 +195,7 @@ int func_8043636C(short arg0, unsigned short arg1)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/mystery_gift/func_8043636C.s")
 #endif
-int _func_8043636C(short arg0, unsigned short arg1);
+int _generateMysteryGift(short arg0, unsigned short arg1);
 
 #if NON_MATCHING
 // 482 equivalent https://decomp.me/scratch/cZuqK
@@ -319,7 +319,7 @@ void _func_804365A4(unsigned char arg0);
 
 void func_80436760(unsigned char arg0, short* arg1, short* arg2, int arg3, unsigned char arg4) {
     // succeeds if < 5 gifts have been recieved
-    if (_func_8043636C(arg0, arg4) != 0) {
+    if (_generateMysteryGift(arg0, arg4) != 0) {
         _func_804365A4(arg0);
         *arg1 = _func_80436428(arg0);
         *arg2 = _func_80436504(arg3);
