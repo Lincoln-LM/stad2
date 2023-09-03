@@ -144,7 +144,7 @@ char func_80436194(unsigned char arg0, unsigned char arg1, unsigned char arg2) {
                 }
             } else {
                 resultIndex = ((unsigned char) (arg0 >> 4)) & 7;
-                resultIndex = resultIndex + 0x18ull;
+                resultIndex = resultIndex + 24ull;
             }
         } else {
             rand = randLCRNG() & 3;
@@ -171,6 +171,7 @@ void func_80436304(sUnkArg0* arg0, s81C00972* arg1, unsigned char arg2) {
     arg1->itemIndex = _func_80436070(arg0->unk0, arg0->unk1);
     arg1->decorationIndex = _func_80436194(arg0->unk1, arg0->unk0, arg2);
 }
+void _func_80436304(sUnkArg0* arg0, s81C00972* arg1, unsigned char arg2);
 
 #if NON_MATCHING
 // 2007 equivalent(?) https://decomp.me/scratch/lQW4f
@@ -179,24 +180,24 @@ int func_8043636C(short arg0, unsigned short arg1)
     int iVar2;
     s81C00972 sp2C;
     unsigned short sp30[11];
-    int sp28;
-    short temp_v0;
+    int giftRecieved;
+    short connectionsToday;
     unsigned char temp_a1;
-    sp28 = 0;
+    giftRecieved = 0;
     seedLCRNG(osGetCount());
     func_8005D9E0(arg0, sp30);
     func_80060A84(&sp2C, sp30[0]);
-    temp_v0 = func_8005E03C(temp_a1);
-    temp_a1 = temp_v0;
-    if (temp_v0 < 5)
+    connectionsToday = func_8005E03C(temp_a1);
+    temp_a1 = connectionsToday;
+    if (connectionsToday < 5)
     {
         func_8005E0BC(temp_a1, temp_a1, sp30[0]);
         func_8005E07C(temp_a1, (temp_a1 + 1) & 0xFFull);
         func_80436194(&sp2C, &D_81C00972, arg1);
         func_80436194(&sp2C, &D_81C00976, arg1);
-        sp28 = 1;
+        giftRecieved = 1;
     }
-    return sp28;
+    return giftRecieved;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/mystery_gift/func_8043636C.s")
@@ -324,6 +325,7 @@ void func_804365A4(unsigned char arg0) {
 void _func_804365A4(unsigned char arg0);
 
 void func_80436760(unsigned char arg0, short* arg1, short* arg2, int arg3, unsigned char arg4) {
+    // succeeds if < 5 gifts have been recieved
     if (_func_8043636C(arg0, arg4) != 0) {
         _func_804365A4(arg0);
         *arg1 = _func_80436428(arg0);
