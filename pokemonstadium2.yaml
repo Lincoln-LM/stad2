@@ -286,4 +286,6 @@ segments:
     subsegments:
       - [0x170D70, c, 170D70]
       - [0x1711B0, bin]
+      - [0x436c70, c, mystery_gift]
+      - [0x437450, bin]
   - [0x4000000]

@@ -51,7 +51,7 @@ int func_80061B88(int, int);
 void func_80061F44(void*);
 // getMovePP
 char func_80062E10(unsigned char);
-void func_80075630(Pokemon*, int);                          /* extern */
+void func_80075630(Pokemon*, int);
 
 extern struct sD_88104EA0* D_88104EA0;
 

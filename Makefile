@@ -39,8 +39,10 @@ CPP := cpp
 
 CC = tools/ido_recomp/linux/5.3/cc
 
+CUSTOM_CFLAGS ?= 
+
 ASFLAGS = -EB -mtune=vr4300 -march=vr4300 -Iinclude
-CFLAGS  = -G 0 -non_shared -Xfullwarn -Xcpluscomm -Iinclude -Wab,-r4300_mul -D _LANGUAGE_C -mips2 -O2
+CFLAGS  = -G 0 -non_shared -Xfullwarn -Xcpluscomm -Iinclude -Wab,-r4300_mul -D _LANGUAGE_C -mips2 -O2 $(CUSTOM_CFLAGS)
 LDFLAGS = -T undefined_syms_auto.txt -T undefined_funcs_auto.txt -T $(BUILD_DIR)/$(LD_SCRIPT) -Map $(BUILD_DIR)/$(TARGET).map --no-check-sections
 
 OPTFLAGS := -O2
