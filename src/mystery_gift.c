@@ -1,16 +1,10 @@
 #include "common.h"
 
-typedef struct s81C00972 {
+typedef struct sGiftResult {
     unsigned char giftType;
     unsigned char itemIndex;
     unsigned char decorationIndex;
-} s81C00972;
-
-typedef struct sUnkArg0 {
-    unsigned char unk0;
-    unsigned char unk1;
-    unsigned char unk2;
-} sUnkArg0;
+} sGiftResult;
 
 typedef struct sUnk {
     int unk0;
@@ -58,15 +52,15 @@ extern unsigned char MysteryGiftItems[37];
 // 36 Mirage Mail
 extern unsigned char D_81C008C4[];
 extern unsigned short D_81C008EA[];
-extern s81C00972 D_81C00972;
-extern s81C00972 D_81C00976;
+extern sGiftResult D_81C00972;
+extern sGiftResult D_81C00976;
 extern sUnk D_81C00830[18];
 extern sUnk D_81C00940[];
 extern sUnk D_81C0094C[6];
 extern sUnk D_81C00952[];
 
-void func_8005DFD4(unsigned char, unsigned char, s81C00972*);
-int func_8005F790(unsigned char, unsigned char, s81C00972*);
+void func_8005DFD4(unsigned char, unsigned char, sGiftResult*);
+int func_8005F790(unsigned char, unsigned char, sGiftResult*);
 void func_8005F7B8(int, unsigned char);
 void func_8005F9CC(int, int);
 int func_81C00020(unsigned char);
@@ -84,34 +78,33 @@ void func_81C00584(unsigned char);
 
 #if NON_MATCHING
 // non-matching register nonsense :( 365 https://decomp.me/scratch/Zccdn
-char func_80436070(unsigned char arg0, unsigned char arg1) {
+char selectMysteryGiftItem(unsigned char trainerIdHigh, unsigned char trainerIdLow) {
     int rand;
-    int var_v0;
     char temp;
     unsigned char resultIndex;
 
     if ((randLCRNG() & 0xFF) < 25u) {
         if ((randLCRNG() & 0xFF) < 50u) {
             if ((randLCRNG() & 0xFF) < 50u) {
-                if ((arg0 & (1 << 7))){
+                if ((trainerIdHigh & (1 << 7))){
                     resultIndex = 33;
                 } else {
                     resultIndex = 32;
                 }
             } else {
-                resultIndex = ((unsigned char) (arg0 >> 4)) & 7;
+                resultIndex = ((unsigned char) (trainerIdHigh >> 4)) & 7;
                 resultIndex = (resultIndex + 0x18ull) & 0xFF;
             }
         } else {
             rand = randLCRNG() & 3;
-            temp = (arg0 & (1 << (rand & 0xFF))) ? 1 : 0;
+            temp = (trainerIdHigh & (1 << (rand & 0xFF))) ? 1 : 0;
             temp = (rand << 1) + temp;
             resultIndex = temp;
             resultIndex += 0x10ull;
         }
     } else {
         rand = randLCRNG() & 7;
-        temp = (arg1 & (1 << (rand & 0xFF))) ? 1 : 0;
+        temp = (trainerIdLow & (1 << (rand & 0xFF))) ? 1 : 0;
         resultIndex = ((rand << 1) + temp) & 0xFF;
     }
     return resultIndex;
@@ -119,12 +112,12 @@ char func_80436070(unsigned char arg0, unsigned char arg1) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/mystery_gift/func_80436070.s")
 #endif
-char _func_80436070(unsigned char arg0, unsigned char arg1);
+char _selectMysteryGiftItem(unsigned char trainerIdHigh, unsigned char trainerIdLow);
 
-// very similar to func_80436070
+// very similar to selectMysteryGiftItem
 // non-matching register nonsense :( 475 https://decomp.me/scratch/1YJYh
 #if NON_MATCHING
-char func_80436194(unsigned char arg0, unsigned char arg1, unsigned char arg2) {
+char selectMysteryGiftDecoration(unsigned char trainerIdLow, unsigned char trainerIdHigh, unsigned char arg2) {
     int rand;
     char temp;
     unsigned char resultIndex;
@@ -137,25 +130,25 @@ char func_80436194(unsigned char arg0, unsigned char arg1, unsigned char arg2) {
                     resultIndex = arg2 != 0 ? 34 : 36; 
                 } else if (rand < 154) {
                     resultIndex = 36;
-                } else if (arg0 & (1 << 7)) {
+                } else if (trainerIdLow & (1 << 7)) {
                     resultIndex = 33;
                 } else {
                     resultIndex = 32;
                 }
             } else {
-                resultIndex = ((unsigned char) (arg0 >> 4)) & 7;
+                resultIndex = ((unsigned char) (trainerIdLow >> 4)) & 7;
                 resultIndex = resultIndex + 24ull;
             }
         } else {
             rand = randLCRNG() & 3;
-            temp = (arg0 & (1 << (rand & 0xFF))) ? 1 : 0;
+            temp = (trainerIdLow & (1 << (rand & 0xFF))) ? 1 : 0;
             temp = (rand << 1) + temp;
             resultIndex = temp;
             resultIndex += 0x10ull;
         }
     } else {
         rand = randLCRNG() & 7;
-        temp = (arg1 & (1 << (rand & 0xFF))) ? 1 : 0;
+        temp = (trainerIdHigh & (1 << (rand & 0xFF))) ? 1 : 0;
         resultIndex = ((rand << 1) + temp) & 0xFF;
     }
     return resultIndex;
@@ -163,22 +156,22 @@ char func_80436194(unsigned char arg0, unsigned char arg1, unsigned char arg2) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/mystery_gift/func_80436194.s")
 #endif
-char _func_80436194(unsigned char arg0, unsigned char arg1, unsigned char arg2);
+char _selectMysteryGiftDecoration(unsigned char trainerIdLow, unsigned char trainerIdHigh, unsigned char arg2);
 
 
-void func_80436304(sUnkArg0* arg0, s81C00972* arg1, unsigned char arg2) {
-    arg1->giftType = randLCRNG() & 1;
-    arg1->itemIndex = _func_80436070(arg0->unk0, arg0->unk1);
-    arg1->decorationIndex = _func_80436194(arg0->unk1, arg0->unk0, arg2);
+void selectMysteryGiftResult(unsigned char* trainerId, sGiftResult* giftResult, unsigned char arg2) {
+    giftResult->giftType = randLCRNG() & 1;
+    giftResult->itemIndex = _selectMysteryGiftItem(trainerId[0], trainerId[1]);
+    giftResult->decorationIndex = _selectMysteryGiftDecoration(trainerId[1], trainerId[0], arg2);
 }
-void _func_80436304(sUnkArg0* arg0, s81C00972* arg1, unsigned char arg2);
+void _selectMysteryGiftResult(unsigned char* trainerId, sGiftResult* giftResult, unsigned char arg2);
 
 #if NON_MATCHING
 // 2007 equivalent(?) https://decomp.me/scratch/lQW4f
 int func_8043636C(short arg0, unsigned short arg1)
 {
     int iVar2;
-    unsigned char trainerID[2];
+    unsigned char trainerId[2];
     unsigned short sp30[11];
     int giftRecieved;
     short connectionsToday;
@@ -186,15 +179,15 @@ int func_8043636C(short arg0, unsigned short arg1)
     giftRecieved = 0;
     seedLCRNG(osGetCount());
     func_8005D9E0(arg0, sp30);
-    func_80060A84(&trainerID, sp30[0]);
+    func_80060A84(&trainerId, sp30[0]);
     connectionsToday = func_8005E03C(temp_a1);
     temp_a1 = connectionsToday;
     if (connectionsToday < 5)
     {
         func_8005E0BC(temp_a1, temp_a1, sp30[0]);
         func_8005E07C(temp_a1, (temp_a1 + 1) & 0xFFull);
-        func_80436304(&trainerID, &D_81C00972, arg1);
-        func_80436304(&trainerID, &D_81C00976, arg1);
+        selectMysteryGiftResult(&trainerId, &D_81C00972, arg1);
+        selectMysteryGiftResult(&trainerId, &D_81C00976, arg1);
         giftRecieved = 1;
     }
     return giftRecieved;
