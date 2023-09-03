@@ -178,7 +178,7 @@ void _func_80436304(sUnkArg0* arg0, s81C00972* arg1, unsigned char arg2);
 int func_8043636C(short arg0, unsigned short arg1)
 {
     int iVar2;
-    s81C00972 sp2C;
+    unsigned char trainerID[2];
     unsigned short sp30[11];
     int giftRecieved;
     short connectionsToday;
@@ -186,15 +186,15 @@ int func_8043636C(short arg0, unsigned short arg1)
     giftRecieved = 0;
     seedLCRNG(osGetCount());
     func_8005D9E0(arg0, sp30);
-    func_80060A84(&sp2C, sp30[0]);
+    func_80060A84(&trainerID, sp30[0]);
     connectionsToday = func_8005E03C(temp_a1);
     temp_a1 = connectionsToday;
     if (connectionsToday < 5)
     {
         func_8005E0BC(temp_a1, temp_a1, sp30[0]);
         func_8005E07C(temp_a1, (temp_a1 + 1) & 0xFFull);
-        func_80436304(&sp2C, &D_81C00972, arg1);
-        func_80436304(&sp2C, &D_81C00976, arg1);
+        func_80436304(&trainerID, &D_81C00972, arg1);
+        func_80436304(&trainerID, &D_81C00976, arg1);
         giftRecieved = 1;
     }
     return giftRecieved;
