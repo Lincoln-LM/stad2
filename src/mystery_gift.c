@@ -193,8 +193,8 @@ int func_8043636C(short arg0, unsigned short arg1)
     {
         func_8005E0BC(temp_a1, temp_a1, sp30[0]);
         func_8005E07C(temp_a1, (temp_a1 + 1) & 0xFFull);
-        func_80436194(&sp2C, &D_81C00972, arg1);
-        func_80436194(&sp2C, &D_81C00976, arg1);
+        func_80436304(&sp2C, &D_81C00972, arg1);
+        func_80436304(&sp2C, &D_81C00976, arg1);
         giftRecieved = 1;
     }
     return giftRecieved;
