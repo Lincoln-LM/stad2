@@ -117,7 +117,7 @@ char _selectMysteryGiftItem(unsigned char trainerIdHigh, unsigned char trainerId
 // very similar to selectMysteryGiftItem
 // non-matching register nonsense :( 475 https://decomp.me/scratch/1YJYh
 #if NON_MATCHING
-char selectMysteryGiftDecoration(unsigned char trainerIdLow, unsigned char trainerIdHigh, unsigned char arg2) {
+char selectMysteryGiftDecoration(unsigned char trainerIdLow, unsigned char trainerIdHigh, unsigned char roundTwoUnlocked) {
     int rand;
     char temp;
     unsigned char resultIndex;
@@ -127,7 +127,7 @@ char selectMysteryGiftDecoration(unsigned char trainerIdLow, unsigned char train
             if ((randLCRNG() & 0xFF) < 72u) {
                 rand = randLCRNG() & 0xFF;
                 if (rand < 77) {
-                    resultIndex = arg2 != 0 ? 34 : 36; 
+                    resultIndex = roundTwoUnlocked != 0 ? 34 : 36; 
                 } else if (rand < 154) {
                     resultIndex = 36;
                 } else if (trainerIdLow & (1 << 7)) {
@@ -156,19 +156,19 @@ char selectMysteryGiftDecoration(unsigned char trainerIdLow, unsigned char train
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/mystery_gift/func_80436194.s")
 #endif
-char _selectMysteryGiftDecoration(unsigned char trainerIdLow, unsigned char trainerIdHigh, unsigned char arg2);
+char _selectMysteryGiftDecoration(unsigned char trainerIdLow, unsigned char trainerIdHigh, unsigned char roundTwoUnlocked);
 
 
-void selectMysteryGiftResult(unsigned char* trainerId, sGiftResult* giftResult, unsigned char arg2) {
+void selectMysteryGiftResult(unsigned char* trainerId, sGiftResult* giftResult, unsigned char roundTwoUnlocked) {
     giftResult->giftType = randLCRNG() & 1;
     giftResult->itemIndex = _selectMysteryGiftItem(trainerId[0], trainerId[1]);
-    giftResult->decorationIndex = _selectMysteryGiftDecoration(trainerId[1], trainerId[0], arg2);
+    giftResult->decorationIndex = _selectMysteryGiftDecoration(trainerId[1], trainerId[0], roundTwoUnlocked);
 }
-void _selectMysteryGiftResult(unsigned char* trainerId, sGiftResult* giftResult, unsigned char arg2);
+void _selectMysteryGiftResult(unsigned char* trainerId, sGiftResult* giftResult, unsigned char roundTwoUnlocked);
 
 #if NON_MATCHING
 // 2007 equivalent(?) https://decomp.me/scratch/lQW4f
-int generateMysteryGift(short arg0, unsigned short arg1)
+int generateMysteryGift(short arg0, unsigned short roundTwoUnlocked)
 {
     int iVar2;
     unsigned char trainerId[2];
@@ -186,8 +186,8 @@ int generateMysteryGift(short arg0, unsigned short arg1)
     {
         func_8005E0BC(temp_a1, temp_a1, sp30[0]);
         func_8005E07C(temp_a1, (temp_a1 + 1) & 0xFFull);
-        selectMysteryGiftResult(&trainerId, &D_81C00972, arg1);
-        selectMysteryGiftResult(&trainerId, &D_81C00976, arg1);
+        selectMysteryGiftResult(&trainerId, &D_81C00972, roundTwoUnlocked);
+        selectMysteryGiftResult(&trainerId, &D_81C00976, roundTwoUnlocked);
         giftRecieved = 1;
     }
     return giftRecieved;
@@ -195,7 +195,7 @@ int generateMysteryGift(short arg0, unsigned short arg1)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/mystery_gift/func_8043636C.s")
 #endif
-int _generateMysteryGift(short arg0, unsigned short arg1);
+int _generateMysteryGift(short arg0, unsigned short roundTwoUnlocked);
 
 #if NON_MATCHING
 // 482 equivalent https://decomp.me/scratch/cZuqK
@@ -317,9 +317,9 @@ void func_804365A4(unsigned char arg0) {
 #endif
 void _func_804365A4(unsigned char arg0);
 
-void func_80436760(unsigned char arg0, short* arg1, short* arg2, int arg3, unsigned char arg4) {
+void func_80436760(unsigned char arg0, short* arg1, short* arg2, int arg3, unsigned char roundTwoUnlocked) {
     // succeeds if < 5 gifts have been recieved
-    if (_generateMysteryGift(arg0, arg4) != 0) {
+    if (_generateMysteryGift(arg0, roundTwoUnlocked) != 0) {
         _func_804365A4(arg0);
         *arg1 = _func_80436428(arg0);
         *arg2 = _func_80436504(arg3);
